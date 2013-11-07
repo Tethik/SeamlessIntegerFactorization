@@ -9,7 +9,7 @@ import java.util.Queue;
 
 public class Main {
 
-	private static long TIMEOUT = 14000;
+	private static long TIMEOUT = 15000;
 	private static BigInteger ZERO = new BigInteger("0");
 	private static BigInteger ONE = new BigInteger("1");
 	private static BigInteger TWO = new BigInteger("2");
@@ -88,14 +88,15 @@ public class Main {
 			values.add(new BigInteger(line));
 		}
 		
-//		long start_time = System.currentTimeMillis();
-//		long stop_time = start_time + TIMEOUT;
+	long start_time = System.currentTimeMillis();
+	long stop_time = start_time + TIMEOUT;
 		
-//		int values_to_go = values.size();
+	int values_to_go = values.size();
 		int iWin = 0;
 		for(BigInteger value : values) {
 			factors.clear();
-			timeout_when =  System.currentTimeMillis() + (TIMEOUT / values.size());
+			long currtime = System.currentTimeMillis();
+			timeout_when =  currtime + (stop_time - currtime) / values_to_go;
 //			System.out.println(timeout_when);
 			factor(value);
 			
@@ -107,14 +108,11 @@ public class Main {
 				iWin++;
 			}
 			System.out.println();
+			values_to_go--;
 			
 		}
 		
-		//System.err.println(iWin);
-		
-		
-		
-
+		System.err.println(iWin);
 	}
 
 }
