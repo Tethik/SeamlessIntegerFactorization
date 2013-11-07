@@ -46,13 +46,13 @@ func (tasks Tasks) RunTasksWithTimeout(stopTime time.Time) {
 			}
 			duration := stopTime.Sub(time.Now()) / time.Duration(todo)
 			dprint(duration)
+			task.stopTime = time.Now().Add(duration)
 			go task.Run()
-			select {
-				case <-time.After(duration):
-					dprint("Timeout occured.")
-					task.Stop()
-				case <-task.ch:		
-					dprint("Finished normally.")							
+			<-task.ch
+			if(task.timed_out) {
+				dprint("Timeout occured.")
+			} else {
+				dprint("Finished normally.")							
 			}		
 				
 			waitCond.L.Lock()	

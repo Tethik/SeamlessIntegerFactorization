@@ -3,7 +3,8 @@ package main
 import "math/big"
 import "sync"
 import "fmt"
-import "runtime"
+//~ import "runtime"
+import "time"
 
 type doWork func(*Task) ([]*big.Int)
 
@@ -11,6 +12,7 @@ type Task struct {
 	index int
 	toFactor *big.Int
 	
+	stopTime time.Time
 	ch 	chan bool
 	waitGroup *sync.WaitGroup
 	finished bool
@@ -35,7 +37,7 @@ func NewTask(index int, toFactor *big.Int, w doWork) *Task {
 
 func (task* Task) Stop() {	
 	//~ close(task.ch)
-	task.ch <- true
+	//~ task.ch <- true
 	task.finished = true
 	task.timed_out = true
 	//~ runtime.Gosched() 
@@ -56,19 +58,21 @@ func (task* Task) PrintResult() {
 }
 
 func (task* Task) ShouldStop() bool {
-	if task.finished {
+	if task.finished || task.stopTime.Before(time.Now()) {
+		task.finished = true
+		task.timed_out = true
 		return task.finished
 	}
 	
 	// Allow other go threads to run
-	runtime.Gosched() 
+	//~ runtime.Gosched() 
 	
-	select {
-		case <-task.ch:
-			task.finished = true
-			return true
-		default:			
-	}
+	//~ select {
+		//~ case <-task.ch:
+			//~ task.finished = true
+			//~ return true
+		//~ default:			
+	//~ }
 	return false
 }
 

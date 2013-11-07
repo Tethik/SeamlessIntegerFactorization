@@ -15,7 +15,7 @@ var (
 	work_function = pollardFactoring
 	//~ work_function = trialDivisionPollardFactoring
 	//~ work_function = naiveFactoring
-	debug = true
+	debug = false
 )
 
 func dprint(a ...interface{}) {

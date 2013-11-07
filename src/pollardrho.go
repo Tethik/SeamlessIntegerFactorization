@@ -67,17 +67,6 @@ func _pollardFactoring(task *Task, toFactor *big.Int) ([]*big.Int) {
 			return buffer
 		}
 		
-		/*
-		tmp, newQuo, timed_out := trialdivision(task,quo)		
-		buffer = append(buffer, tmp...)
-		if(timed_out) {
-			return buffer, true
-		}
-		if(newQuo == nil) {
-			return buffer, false
-		}		
-		quo = newQuo		
-		*/
 		var factor *big.Int
 		var error bool
 		for i := 0; ; i++ {
