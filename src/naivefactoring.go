@@ -17,14 +17,12 @@ func getPrimes() ([]uint16) {
 	primes = append(primes, uint16(val))
 	
 	for i := 2; i < primeCalcCount && val < 65535; i++ {
-		for {
-			if big.NewInt(int64(val)).ProbablyPrime(prime_precision) {
-				primes = append(primes, uint16(val))
-				break
-			}
-			val += 2
+		
+		if big.NewInt(int64(val)).ProbablyPrime(prime_precision) {
+			primes = append(primes, uint16(val))
 		}
 		val += 2
+	
 	}
 	//fmt.Println("FOUND", len(primes), "primes")
 	return primes

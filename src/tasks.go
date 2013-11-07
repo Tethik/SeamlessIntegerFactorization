@@ -33,14 +33,14 @@ func (tasks Tasks) RunTasksWithTimeout(stopTime time.Time) {
 	for _, task := range tasks {				
 		
 		waitCond.L.Lock()
-		for(current_running > numWorkers) {
+		for(current_running >= numWorkers) {
 			waitCond.Wait()
 		}
 		current_running++
 		waitCond.L.Unlock()
 		
 		go func(task* Task) {					
-			todo := len(tasks) - finishedTasks - numWorkers
+			todo := len(tasks) - finishedTasks - (numWorkers - 1)
 			if(todo < 1) {
 				todo = 1
 			}

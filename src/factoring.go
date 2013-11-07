@@ -12,10 +12,10 @@ import "sort"
 var (
 	numWorkers = 1 //runtime.NumCPU() // Kommer antagligen alltid vara ett för kattis..
 	allowedRunTime  int = 14000 // milliseconds
-	//work_function = pollardFactoring
-	work_function = trialDivisionPollardFactoring
-	//work_function = naiveFactoring
-	debug = false
+	work_function = pollardFactoring
+	//~ work_function = trialDivisionPollardFactoring
+	//~ work_function = naiveFactoring
+	debug = true
 )
 
 func dprint(a ...interface{}) {
@@ -28,6 +28,7 @@ func dprint(a ...interface{}) {
 
 func main() {	
 	dprint("[DEBUG] is on!!!")
+	
 	reader := bufio.NewReader(os.Stdin)
 	factorCount := 100
 	tasks := make(Tasks, 0, factorCount)
